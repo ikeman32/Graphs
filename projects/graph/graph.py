@@ -40,12 +40,14 @@ class Graph:
         while q.size() > 0:
             current_node = q.dequeue()
 
-            visited.add(current_node)
+            if current_node not in visited:
 
-            neighbors = self.get_neighbors()
+                visited.add(current_node)
 
-            for neighbor in neighbors:
-                q.enqueue(neighbor)
+                neighbors = self.get_neighbors(current_node)
+
+                for neighbor in neighbors:
+                    q.enqueue(neighbor)
 
 
     def dft(self, starting_vertex):
