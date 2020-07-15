@@ -43,11 +43,35 @@ class SocialGraph:
         self.users = {}
         self.friendships = {}
         # !!!! IMPLEMENT ME
-
+​
         # Add users
-
+        ## use num_users
+        for user in range(num_users):
+            self.add_user(user)
+​
         # Create friendships
+        ## make a list with all POSSIBLE friendships
+        ### Example:
+        # 5 users
+        # [(1, 2), (1, 3), (1, 4), (1, 5), (2, 3), (2, 4), (2, 5), (3, 4), (3, 5), (4, 5)]
+        friendships = []
+        for user in range(1, self.last_id + 1):
+            for friend in range(user + 1, num_users + 1):
+                friendship = (user, friend)
+                friendships.append(friendship)
 
+        ## Shuffle the list
+        self.fisher_yates_shuffle(friendships)
+
+        ## Take as many as we need
+        total_friendships = num_users * avg_friendships
+
+        random_friendships = friendships[:total_friendships//2]
+        ## add to self.friendships
+        for friendship in random_friendships:
+            self.add_friendship(friendship[0], friendship[1])
+
+            
     def get_all_social_paths(self, user_id):
         """
         Takes a user's user_id as an argument
