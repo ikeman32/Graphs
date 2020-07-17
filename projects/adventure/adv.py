@@ -94,7 +94,6 @@ def visit_all_rooms():
     s.push(get_id())
     rooms_visited = set()
     current_room = ''
-    # next_room = ''
 
     check_point = set()
     check_point.add(get_id())
@@ -104,167 +103,42 @@ def visit_all_rooms():
 
     while len(rooms_visited) < len(room_graph) and s.size() != 0:
         current_room = s.pop()
-        # print(check_point)
-        # if current_room != None:
+        
         if current_room not in rooms_visited:
             rooms_visited.add(current_room)
         
         if to_check_point:
-            # if current_room in check_point:
-            #     to_check_point = False
-            #     check_point_path.clear()
-            #     continue
             if check_point_path[-1] is 'n':
                 s.push(get_neighbors('s'))
                 check_point_path.pop()
-            if check_point_path[-1] is 's':
+            elif check_point_path[-1] is 's':
                 s.push(get_neighbors('n'))
                 check_point_path.pop()
-            if check_point_path[-1] is 'e':
+            elif check_point_path[-1] is 'e':
                 s.push(get_neighbors('w'))
                 check_point_path.pop()
-            if check_point_path[-1] is 'w':
+            elif check_point_path[-1] is 'w':
                 s.push(get_neighbors('e'))
                 check_point_path.pop()
-        else:
-            to_check_point = False
-            if '?' in room_map[current_room].values():
-                if room_map[current_room].get('n') is '?':
-                    s.push(get_neighbors('n'))
-                    check_point_path.append('s')
-                if room_map[current_room].get('s') is '?':
-                    s.push(get_neighbors('s'))
-                    check_point_path.append('n')
-                if room_map[current_room].get('w') is '?':
-                    s.push(get_neighbors('w'))
-                    check_point_path.append('e')
-                if room_map[current_room].get('e') is '?':
-                    s.push(get_neighbors('e'))
-                    check_point_path.append('w')
             else:
-                to_check_point = True
-
-        # if not to_check_point:
-            # if current_room in check_point:
-        # if '?' in room_map[current_room].values():
-        #     if room_map[current_room].get('n') is '?':
-        #         s.push(get_neighbors('n'))
-        #         check_point_path.append('s')
-        #     if room_map[current_room].get('s') is '?':
-        #         s.push(get_neighbors('s'))
-        #         check_point_path.append('n')
-        #     if room_map[current_room].get('w') is '?':
-        #         s.push(get_neighbors('w'))
-        #         check_point_path.append('e')
-        #     if room_map[current_room].get('e') is '?':
-        #         s.push(get_neighbors('e'))
-        #         check_point_path.append('w')
-        # else:
-        #     to_check_point = True
-            
-            # if current_room not in check_point:
-            #     if '?' not in room_map[current_room].values():
-            #         to_check_point = True
-            #         continue
-            #     if '?' in room_map[current_room].values():
-            #         if room_map[current_room].get('n') is '?':
-            #             s.push(get_neighbors('n'))
-            #             check_point_path.append('s')
-            #         if room_map[current_room].get('s') is '?':
-            #             s.push(get_neighbors('s'))
-            #             check_point_path.append('n')
-            #         if room_map[current_room].get('w') is '?':
-            #             s.push(get_neighbors('w'))
-            #             check_point_path.append('e')
-            #         if room_map[current_room].get('e') is '?':
-            #             s.push(get_neighbors('e'))
-            #             check_point_path.append('w')
-                        
-            
+                to_check_point = False
         
-        
-            
-                
-       
+        if room_map[current_room].get('n') is '?':
+            s.push(get_neighbors('n'))
+            check_point_path.append('s')
+        elif room_map[current_room].get('s') is '?':
+            s.push(get_neighbors('s'))
+            check_point_path.append('n')
+        elif room_map[current_room].get('w') is '?':
+            s.push(get_neighbors('w'))
+            check_point_path.append('e')
+        elif room_map[current_room].get('e') is '?':
+            s.push(get_neighbors('e'))
+            check_point_path.append('w')
+        else:
+            to_check_point = True
 
         
-        # if '?' in room_map[current_room].values():
-        # if '?' in room_map[current_room].get('n'):
-        #     next_room = get_neighbors('n')
-        #     check_point_path.append('s')
-        #     # prev_room = get_id()
-        #     s.push(next_room)
-        #     continue
-        # if '?' in room_map[current_room].get('s'):
-        #     next_room = get_neighbors('s')
-        #     check_point_path.append('n')
-        #     # prev_room = get_id()
-        #     s.push(next_room)
-        #     continue
-        # if '?' in room_map[current_room].get('w'):
-        #     next_room = get_neighbors('w')
-        #     check_point_path.append('e')
-        #     # prev_room = get_id()
-        #     s.push(next_room)
-        #     continue
-        # if '?' in room_map[current_room].get('e'):
-        #     next_room = get_neighbors('e')
-        #     check_point_path.append('w')
-        #     # prev_room = get_id()
-        #     s.push(next_room)
-        #     continue
-
-        # if not to_check_point:
-        #     if '?' in room_map[current_room].values():
-        #         if '?' in room_map[current_room].get('n'):
-        #             next_room = get_neighbors('n')
-        #             check_point_path.append('s')
-        #             # prev_room = get_id()
-        #             s.push(next_room)
-        #             continue
-        #         if '?' in room_map[current_room].get('s'):
-        #             next_room = get_neighbors('s')
-        #             check_point_path.append('n')
-        #             # prev_room = get_id()
-        #             s.push(next_room)
-        #             continue
-        #         if '?' in room_map[current_room].get('w'):
-        #             next_room = get_neighbors('w')
-        #             check_point_path.append('e')
-        #             # prev_room = get_id()
-        #             s.push(next_room)
-        #             continue
-        #         if '?' in room_map[current_room].get('e'):
-        #             next_room = get_neighbors('e')
-        #             check_point_path.append('w')
-        #             # prev_room = get_id()
-        #             s.push(next_room)
-        #             continue
-        #         else:
-        #             to_check_point = True
-        # elif to_check_point:
-                
-        #     if current_room in check_point:
-        #         if '?' in room_map[current_room].get('w'):
-        #             next_room = get_neighbors('w')
-        #             check_point_path.append('e')
-        #             # prev_room = get_id()
-        #             s.push(next_room)
-        #             continue
-        #         if '?' in room_map[current_room].get('e'):
-        #             next_room = get_neighbors('e')
-        #             check_point_path.append('w')
-        #             # prev_room = get_id()
-        #             s.push(next_room)
-        #             continue
-        #         else:
-        #             to_check_point = False
-        #     next_room = get_neighbors(check_point_path[-1])
-        #     s.push(next_room)
-        #     check_point_path.pop()
-        #     continue
-
-        # s.push(next_room)
         print('map:', room_map)
         print('rooms:',rooms_visited)
         
