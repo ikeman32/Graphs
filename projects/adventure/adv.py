@@ -93,54 +93,77 @@ def visit_all_rooms():
     s = Stack()   
     s.push(get_id())
     rooms_visited = set()
-    current_room = ''
-
-    check_point = set()
-    check_point.add(get_id())
-    to_check_point = False
-    check_point_path = []
-    
-
-    while len(rooms_visited) < len(room_graph) and s.size() != 0:
+    last_direction = ''
+    dirs = ['n','s','w','e']
+    while len(rooms_visited) < len(room_graph):
+        print(room_map)
+        # print(rooms_visited)
+        print(traversal_path)
         current_room = s.pop()
-        
+        if last_direction is '':
+            last_direction = random.choice(dirs)
+        traversal_path.append(current_room)
+
         if current_room not in rooms_visited:
             rooms_visited.add(current_room)
         
-        if to_check_point:
-            if check_point_path[-1] is 'n':
-                s.push(get_neighbors('s'))
-                check_point_path.pop()
-            elif check_point_path[-1] is 's':
-                s.push(get_neighbors('n'))
-                check_point_path.pop()
-            elif check_point_path[-1] is 'e':
-                s.push(get_neighbors('w'))
-                check_point_path.pop()
-            elif check_point_path[-1] is 'w':
-                s.push(get_neighbors('e'))
-                check_point_path.pop()
-            else:
-                to_check_point = False
-        
-        if room_map[current_room].get('n') is '?':
-            s.push(get_neighbors('n'))
-            check_point_path.append('s')
-        elif room_map[current_room].get('s') is '?':
-            s.push(get_neighbors('s'))
-            check_point_path.append('n')
-        elif room_map[current_room].get('w') is '?':
-            s.push(get_neighbors('w'))
-            check_point_path.append('e')
-        elif room_map[current_room].get('e') is '?':
-            s.push(get_neighbors('e'))
-            check_point_path.append('w')
-        else:
-            to_check_point = True
+        if '?' in room_map[current_room].values():
+            if last_direction is 'e':
+                while room_map[current_room].get('e') is '?':
+                    last_direction = ''
+                    s.push(get_neighbors('e'))
+                    break
+                else:
+                    last_direction = ''
+            if last_direction is 'w':
+                while room_map[current_room].get('w') is '?':
+                    last_direction = ''
+                    s.push(get_neighbors('w'))
+                    break
+                else:
+                    last_direction = ''
+            if last_direction is 'n':
+                while room_map[current_room].get('n') is '?':
+                    last_direction = ''
+                    s.push(get_neighbors('n'))
+                    break
+                else:
+                    last_direction = ''
+            if last_direction is 's':
+                while room_map[current_room].get('s') is '?':
+                    last_direction = ''
+                    s.push(get_neighbors('s'))
+                    break
+                else:
+                    last_direction = ''
+        if '?' not in room_map[current_room].values():
+            if last_direction is 'e':
+                while room_map[current_room].get('e'):
+                    s.push(get_neighbors('w'))
+                    break
+                else:
+                    last_direction = ''
+            if last_direction is 'w':
+                while room_map[current_room].get('w'):
+                    s.push(get_neighbors('e'))
+                    break
+                else:
+                    last_direction = ''
+            if last_direction is 'n':
+                while room_map[current_room].get('n'):
+                    s.push(get_neighbors('s'))
+                    break
+                else:
+                    last_direction = 's'
+            if last_direction is 's':
+                while room_map[current_room].get('s'):
+                    s.push(get_neighbors('n'))
+                    break
+                else:
+                    last_direction = ''
 
-        
-        print('map:', room_map)
-        print('rooms:',rooms_visited)
+
+    
         
 visit_all_rooms()
 #------------------------------------------------------------------------------------------------------------------------------
